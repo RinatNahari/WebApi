@@ -7,31 +7,35 @@ namespace BLL
     {
         IUserRepository _userRepository;
         public UserManager(IUserRepository userRepository)
-            =>_userRepository = userRepository;
-        
+            => _userRepository = userRepository;
+
         public List<UserDTO> GetUsers() => _userRepository.GetUsers();
-        public UserDTO Add(UserDTO userDTO)
+        public bool Add(UserDTO userDTO)
         {
-            if (userDTO.UserId != 0
-                && !string.IsNullOrEmpty(userDTO.UserName)
-                && !string.IsNullOrEmpty(userDTO.Password))
-            {
-                _userRepository.Add(userDTO);
-                return userDTO;
-            }
-            return userDTO;
+            if (_userRepository.GetById(userDTO.UserId) != null)
+                return false;
+            if (userDTO.UserId <= 0
+                || string.IsNullOrEmpty(userDTO.UserName)
+                || string.IsNullOrEmpty(userDTO.Password))
+                return false;
+
+            _userRepository.Add(userDTO);
+            return true;
         }
-        public int Delete(int id)
+        public bool Delete(int userId)
         {
-            if (id > 0)
-                _userRepository.DeleteUser(id);
-            return id;
+            var userDTO = _userRepository.GetById(userId);
+            if (userDTO == null)
+                return false;
+            _userRepository.Delete(userDTO);
+            return true;
         }
         public bool Validate(UserDTO userDTO, string password)
         {
-            var user = _userRepository.GetUsers().Where(u => u.UserId == userDTO.UserId && u.Password == password)
-                                      .Select(u => u);
-            return user != null;
+            var user = _userRepository.GetById(userDTO.UserId);
+            if (user != null && user.Password == password)
+                return true;
+            return false;
         }
     }
 }

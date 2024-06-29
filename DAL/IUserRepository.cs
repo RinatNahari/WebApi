@@ -10,7 +10,8 @@ namespace DAL
     public interface IUserRepository
     {
         List<UserDTO> GetUsers();
-        UserDTO Add(UserDTO userDTO);
-        void DeleteUser(int id);
+        UserDTO GetById(int userId);
+        void Add(UserDTO userDTO);
+        void Delete(UserDTO userDTO);
     }
 }

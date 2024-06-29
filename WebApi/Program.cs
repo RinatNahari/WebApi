@@ -1,10 +1,12 @@
 using BLL;
 using DAL;
+using WebApi.Customs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDAL();
 builder.Services.AddBLL();
+builder.Services.AddCustom();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

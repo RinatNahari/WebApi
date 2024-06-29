@@ -22,20 +22,8 @@ namespace DAL
             Add(new UserDTO() { UserId = 2, Password = "User2@123", UserName = "User2" });
         }
         public List<UserDTO> GetUsers() => _users;
-        public UserDTO Add(UserDTO userDTO)
-        {
-            if (!_users.Contains(userDTO))
-            {
-                _users.Add(userDTO);
-                return userDTO;
-            }
-            return userDTO;
-        }
-        public void DeleteUser(int id)
-        {
-            var userDTO = _users.Where(u => u.UserId == id).Select(u => u);
-            if (userDTO != null)
-                _users.Remove(userDTO);
-        }
+        public UserDTO GetById(int userId) => _users.FirstOrDefault(x => x.UserId == userId);
+        public void Add(UserDTO userDTO) => _users.Add(userDTO);
+        public void Delete(UserDTO userDTO) => _users.Remove(userDTO);
     }
 }

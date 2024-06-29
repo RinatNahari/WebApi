@@ -21,21 +21,29 @@ namespace WebApi.Controllers
         public ActionResult<UserDTO> Post([FromBody] UserDTO userDTO)
         {
             var res = _userManager.Add(userDTO);
-            if (res == null)
-                return BadRequest(res);
-            return Ok(res);
+            if (res)
+                return Ok();
+            return BadRequest();
         }
 
-        [HttpDelete("{id:int}", Name = "DeleteUser")]
+        [HttpDelete("{id:int}", Name = "Delete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult DeleteUser(int id)
+        public IActionResult Delete(int id)
         {
             var res = _userManager.Delete(id);
-            if (res < 0)
-                return NotFound();
+            if (res)
+                return Ok();
             return NoContent();
         }
 
+        [HttpPut("{password:string}", Name = "ValidateUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult ValidateUser([FromBody] UserDTO userDTO, string password)
+        {
+            var res = _userManager.Validate(userDTO, password);
+            return Ok(res);
+        }
     }
 }

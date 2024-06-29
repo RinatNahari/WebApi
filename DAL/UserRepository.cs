@@ -29,7 +29,7 @@ namespace DAL
                 _users.Add(userDTO);
                 return userDTO;
             }
-            return null;
+            return userDTO;
         }
         public void DeleteUser(int id)
         {

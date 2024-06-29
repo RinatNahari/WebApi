@@ -12,14 +12,14 @@ namespace BLL
         public List<UserDTO> GetUsers() => _userRepository.GetUsers();
         public UserDTO Add(UserDTO userDTO)
         {
-            if (userDTO.UserId != null && userDTO.UserId != 0
+            if (userDTO.UserId != 0
                 && !string.IsNullOrEmpty(userDTO.UserName)
                 && !string.IsNullOrEmpty(userDTO.Password))
             {
                 _userRepository.Add(userDTO);
                 return userDTO;
             }
-            return null;
+            return userDTO;
         }
         public int Delete(int id)
         {

@@ -22,20 +22,20 @@ namespace WebApi.Controllers
         {
             var res = _userManager.Add(userDTO);
             if (res)
-                return Ok();
-            return BadRequest();
+                return Ok(userDTO);
+            ModelState.AddModelError("CustomError", "User already exists!");
+            return BadRequest(ModelState);
         }
 
         [HttpDelete("{id:int}", Name = "Delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
             var res = _userManager.Delete(id);
             if (res)
                 return Ok();
-            return NoContent();
+            return NotFound();
         }
 
         [HttpPut("{password:string}", Name = "ValidateUser")]

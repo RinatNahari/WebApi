@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository
     {
         List<UserDTO> _users;
         public UserRepository()

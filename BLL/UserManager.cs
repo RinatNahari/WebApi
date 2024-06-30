@@ -5,8 +5,8 @@ namespace BLL
 {
     public class UserManager
     {
-        IUserRepository _userRepository;
-        public UserManager(IUserRepository userRepository)
+        UserRepository _userRepository;
+        public UserManager(UserRepository userRepository)
             => _userRepository = userRepository;
 
         public List<UserDTO> GetUsers() => _userRepository.GetUsers();

@@ -11,7 +11,7 @@ namespace DAL
     {
         public static IServiceCollection AddDAL(this IServiceCollection services)
         {
-            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<UserRepository>();
             return services;
         }
     }
